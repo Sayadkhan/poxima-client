@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import ProjectForm from "../components/ProjectForm";
 import ProjectsCard from "../components/ProjectsCard";
 
 const Home = () => {
@@ -38,7 +39,9 @@ const Home = () => {
             ))}
         </div>
       </div>
-      <div className="right"></div>
+      <div className="right">
+        <ProjectForm />
+      </div>
     </div>
   );
 };

@@ -3,3 +3,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.form-control {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
