@@ -2,6 +2,8 @@ import React from "react";
 import { currencyFormatter } from "../utils/CurrencyFormatter";
 import { useProjectContext } from "../hooks/useProjectContext";
 
+import moment from "moment";
+
 const ProjectsCard = ({ project }) => {
   const { dispatch } = useProjectContext();
 
@@ -35,9 +37,12 @@ const ProjectsCard = ({ project }) => {
         <div className="left flex flex-col">
           <span>Budget: {currencyFormatter(project.budget)}</span>
           <span>
-            Added on: {new Date(project.createdAt).toLocaleDateString()}
+            Added on: {moment(project.createdAt).format("DD MMM YY. hh:mm A")}
           </span>
-          <span>Last Update: {new Date(project.updatedAt).toDateString()}</span>
+          <span>
+            Last Update:{" "}
+            {moment(project.updatedAt).format("DD MMM YY. hh:mm A")}
+          </span>
         </div>
         <div className="right flex flex-col">
           <span>Manager: {project.manager}</span>
