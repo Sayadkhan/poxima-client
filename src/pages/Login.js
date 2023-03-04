@@ -5,13 +5,13 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { Login, error, loading } = useLogin();
+  const { login, error, loading } = useLogin();
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
     // login user
-    await Login(email, password);
+    await login(email, password);
   };
 
   return (

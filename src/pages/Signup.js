@@ -6,13 +6,13 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { Signup, error, loading } = useSignup();
+  const { signup, error, loading } = useSignup();
 
   const handleSignup = async (e) => {
     e.preventDefault();
 
     // signup user
-    await Signup(email, password);
+    await signup(email, password);
   };
 
   return (
