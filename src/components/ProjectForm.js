@@ -2,6 +2,8 @@ import React, { useState } from "react";
 
 import { useProjectContext } from "../hooks/useProjectContext";
 
+import { useAuthContext } from "../hooks/useAuthContex";
+
 const ProjectForm = ({ project, setIsModalOpen, setIsOverLayOpen }) => {
   const [title, setTitle] = useState(project ? project.title : "");
   const [tech, setTech] = useState(project ? project.tech : "");
@@ -14,8 +16,14 @@ const ProjectForm = ({ project, setIsModalOpen, setIsOverLayOpen }) => {
 
   const { dispatch } = useProjectContext();
 
+  const { user } = useAuthContext();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!user) {
+      setError("you must be logged in!");
+    }
 
     // data
 
@@ -28,6 +36,7 @@ const ProjectForm = ({ project, setIsModalOpen, setIsOverLayOpen }) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
         },
         body: JSON.stringify(projectObj),
       });
@@ -68,6 +77,7 @@ const ProjectForm = ({ project, setIsModalOpen, setIsOverLayOpen }) => {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
           },
           body: JSON.stringify(projectObj),
         }
@@ -122,7 +132,7 @@ const ProjectForm = ({ project, setIsModalOpen, setIsOverLayOpen }) => {
           placeholder="e.g. e-commerce website"
           id="title"
           className={`bg-transparent border border-slate-500 py-3 px-5 rounded-lg outline-none focus:border-sky-400 duration-300 ${
-            emptyFields.includes("title")
+            emptyFields?.includes("title")
               ? "border-rose-500"
               : "border-slate-500"
           }`}
@@ -143,7 +153,7 @@ const ProjectForm = ({ project, setIsModalOpen, setIsOverLayOpen }) => {
           placeholder="e.g. React , node.js , redux etc"
           id="tech"
           className={`bg-transparent border border-slate-500 py-3 px-5 rounded-lg outline-none focus:border-sky-400 duration-300 ${
-            emptyFields.includes("tech")
+            emptyFields?.includes("tech")
               ? "border-rose-500"
               : "border-slate-500"
           }`}
@@ -164,7 +174,7 @@ const ProjectForm = ({ project, setIsModalOpen, setIsOverLayOpen }) => {
           placeholder="e.g. 500"
           id="budget"
           className={`bg-transparent border border-slate-500 py-3 px-5 rounded-lg outline-none focus:border-sky-400 duration-300 ${
-            emptyFields.includes("budget")
+            emptyFields?.includes("budget")
               ? "border-rose-500"
               : "border-slate-500"
           }`}
@@ -185,7 +195,7 @@ const ProjectForm = ({ project, setIsModalOpen, setIsOverLayOpen }) => {
           placeholder="e.g. e-commerce website"
           id="duration"
           className={`bg-transparent border border-slate-500 py-3 px-5 rounded-lg outline-none focus:border-sky-400 duration-300 ${
-            emptyFields.includes("duration")
+            emptyFields?.includes("duration")
               ? "border-rose-500"
               : "border-slate-500"
           }`}
@@ -206,7 +216,7 @@ const ProjectForm = ({ project, setIsModalOpen, setIsOverLayOpen }) => {
           placeholder="e.g. Sayad"
           id="manager"
           className={`bg-transparent border border-slate-500 py-3 px-5 rounded-lg outline-none focus:border-sky-400 duration-300 ${
-            emptyFields.includes("manager")
+            emptyFields?.includes("manager")
               ? "border-rose-500"
               : "border-slate-500"
           }`}
@@ -227,7 +237,9 @@ const ProjectForm = ({ project, setIsModalOpen, setIsOverLayOpen }) => {
           placeholder="e.g. 5"
           id="dev"
           className={`bg-transparent border border-slate-500 py-3 px-5 rounded-lg outline-none focus:border-sky-400 duration-300 ${
-            emptyFields.includes("dev") ? "border-rose-500" : "border-slate-500"
+            emptyFields?.includes("dev")
+              ? "border-rose-500"
+              : "border-slate-500"
           }`}
         />
       </div>

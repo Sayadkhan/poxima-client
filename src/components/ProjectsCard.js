@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { currencyFormatter } from "../utils/CurrencyFormatter";
 import { useProjectContext } from "../hooks/useProjectContext";
+import { useAuthContext } from "../hooks/useAuthContex";
 
 import moment from "moment";
 import ProjectForm from "./ProjectForm";
@@ -10,12 +11,20 @@ const ProjectsCard = ({ project }) => {
   const [isOverLayOpen, setIsOverLayOpen] = useState(false);
 
   const { dispatch } = useProjectContext();
+  const { user } = useAuthContext();
 
   const handleDelete = async () => {
+    if (!user) {
+      return;
+    }
+
     const res = await fetch(
       `http://localhost:5000/api/projects/${project._id}`,
       {
         method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
       }
     );
     const json = await res.json();
